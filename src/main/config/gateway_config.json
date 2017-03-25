@@ -1,0 +1,38 @@
+网关配置GET：
+otocloud-acct/gateway/config
+
+网关配置PUT：
+otocloud-acct/gateway/config
+
+网关配置内容
+{
+        "erpbrand" : "ERP规格", 
+        "erpversion" : "ERP版本",
+        "host" : "ERP服务器IP",
+		"port" : ERP服务器端口,
+        "busi_center_code" : "ERP系统代码",
+        "user_code" : "默认登录用户名",
+        "password" : "登录密码"
+}
+        
+
+设置启用ERP绑定GET：
+otocloud-acct/account/erp_user_binding
+{
+"isEnabled": true/false，为false则没有下面适配器状态值
+"state": 适配器状态
+}
+
+failed: Command失败信息
+        
+设置启用ERP绑定PUT：
+otocloud-acct/account/erp_user_binding
+{"isEnabled": true/false}
+
+succeeded:
+{
+"state": "ONLINE/DEP_FAULT" 在线/失败,
+"err_info": DEP_FAULT状态时的错误信息
+}
+
+failed: Command失败信息

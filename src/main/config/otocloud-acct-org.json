@@ -1,0 +1,70 @@
+{
+	"main": "otocloud.acct.org.AccountOrgService",
+	"options": {
+		"config": {
+		    "app_id": 10,
+			"version_id": 10,
+        	"service_name": "otocloud-acct-org",
+			"api_register_server": {
+				"webserver_name": "121webserver-N01"
+			},
+			"sessionservice_config": {
+				"expire_seconds": 1800,
+				"redis_options": {
+					"host": "127.0.0.1",
+					"port": 6379
+				}
+			},		
+			"auth_mongo_client": {
+				"config": 
+				{
+					"db_name": "otocloud-auth",
+					"connection_string": "mongodb://127.0.0.1:27017"
+				},
+				"sharedpool": "mongo-auth"
+			},	
+			"sys_datasource": {
+				"config": {
+					"max_pool_size": 30,
+					"password": "root",
+					"driver_class": "com.mysql.jdbc.Driver",
+					"user": "root",
+					"url": "jdbc:mysql://localhost:3306/121db_new?useUnicode=true&characterEncoding=UTF-8"
+				},
+				"sharedpool": "jdbc-acct"
+			},
+			"component_common": {
+				
+			},			
+			"component_config": {
+			  "my-user": {
+					"options": {
+						"config" :  {
+							"dependencies":{
+								"auth_service": {
+									"service_name": "otocloud-auth"
+								},
+								"portal_service": {
+									"service_name": "otocloud-portal"
+								}
+							}
+						}
+					 }
+			   },
+			   "my-bizunit-post": {
+					"options": {
+						"config" :  {
+							"dependencies":{
+								"portal_service": {
+									"service_name": "otocloud-portal"
+								}
+							}
+						}
+					 }
+			   }
+			},
+			"component_deployment": []
+		}
+	}
+
+}
