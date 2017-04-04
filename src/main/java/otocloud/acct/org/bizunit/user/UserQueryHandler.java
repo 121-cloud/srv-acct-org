@@ -45,63 +45,83 @@ public class UserQueryHandler extends OtoCloudEventHandlerImpl<JsonObject> {
 
         JsonObject body = msg.body();
         JsonObject content = body.getJsonObject("content");
+        
+        JsonObject session = msg.getSession();
 
         //Long acctId = content.getLong("acct_id");
         Long bizUnitId = content.getLong("biz_unit_id");
-        JsonObject pagingOptions = content.getJsonObject("paging");
-        Integer pageSize = pagingOptions.getInteger("page_size");
-
-        JsonObject session = msg.getSession();
-        
-        Long acctId = Long.parseLong(session.getString(SessionSchema.ORG_ACCT_ID));
-
-        Future<ResultSet> pageFuture = Future.future();
-
-        UserDAO userDAO = new UserDAO(this.componentImpl.getSysDatasource());
-        userDAO.getUserListByPage(acctId, bizUnitId, pagingOptions, pageFuture);
-
-        pageFuture.setHandler(ret -> {
-            if (ret.failed()) {
-				Throwable err = ret.cause();
-				String errMsg = err.getMessage();
-				componentImpl.getLogger().error(errMsg, err);	
-				msg.fail(400, errMsg);
-                return;
-            }
-            
-            List<JsonObject> retDataArrays = ret.result().getRows();
-            
-            Future<Integer> countFuture = Future.future();
-            userDAO.countUser(acctId, bizUnitId, countFuture);
-            countFuture.setHandler(countUserRet -> {
-                if (countUserRet.failed()) {                   
-    				Throwable errThrowable = countUserRet.cause();
-    				String errMsgString = errThrowable.getMessage();
-    				this.componentImpl.getLogger().error(errMsgString, errThrowable);
-    				
-                    JsonObject reply = new JsonObject();
-                    reply.put("total_page", 1);                    
-                    reply.put("total", retDataArrays.size());
-                    reply.put("datas", retDataArrays);
-                    
-                    msg.reply(reply);
-                    
-                }else{
-                	Integer items_total_num = countUserRet.result();
-                    boolean oneMorePage = items_total_num % pageSize != 0;
-
-                    JsonObject reply = new JsonObject();
-                    reply.put("total_page", items_total_num / pageSize + (oneMorePage ? 1 : 0));                    
-                    reply.put("total", items_total_num);
-                    reply.put("datas", retDataArrays);
-                    
-                    msg.reply(reply);
-
-                }
-            });
-
-
-        });
+        JsonObject pagingOptions = content.getJsonObject("paging", null);
+        if(pagingOptions != null){
+	        Integer pageSize = pagingOptions.getInteger("page_size");	
+       
+	        Long acctId = Long.parseLong(session.getString(SessionSchema.ORG_ACCT_ID));
+	
+	        Future<ResultSet> pageFuture = Future.future();
+	
+	        UserDAO userDAO = new UserDAO(this.componentImpl.getSysDatasource());
+	        userDAO.getUserListByPage(acctId, bizUnitId, pagingOptions, pageFuture);
+	
+	        pageFuture.setHandler(ret -> {
+	            if (ret.failed()) {
+					Throwable err = ret.cause();
+					String errMsg = err.getMessage();
+					componentImpl.getLogger().error(errMsg, err);	
+					msg.fail(400, errMsg);
+	                return;
+	            }
+	            
+	            List<JsonObject> retDataArrays = ret.result().getRows();
+	            
+	            Future<Integer> countFuture = Future.future();
+	            userDAO.countUser(acctId, bizUnitId, countFuture);
+	            countFuture.setHandler(countUserRet -> {
+	                if (countUserRet.failed()) {                   
+	    				Throwable errThrowable = countUserRet.cause();
+	    				String errMsgString = errThrowable.getMessage();
+	    				this.componentImpl.getLogger().error(errMsgString, errThrowable);
+	    				
+	                    JsonObject reply = new JsonObject();
+	                    reply.put("total_page", 1);                    
+	                    reply.put("total", retDataArrays.size());
+	                    reply.put("datas", retDataArrays);
+	                    
+	                    msg.reply(reply);
+	                    
+	                }else{
+	                	Integer items_total_num = countUserRet.result();
+	                    boolean oneMorePage = items_total_num % pageSize != 0;
+	
+	                    JsonObject reply = new JsonObject();
+	                    reply.put("total_page", items_total_num / pageSize + (oneMorePage ? 1 : 0));                    
+	                    reply.put("total", items_total_num);
+	                    reply.put("datas", retDataArrays);
+	                    
+	                    msg.reply(reply);
+	
+	                }
+	            });
+	
+	
+	        });
+        }else{
+	        Long acctId = Long.parseLong(session.getString(SessionSchema.ORG_ACCT_ID));
+	    	
+	        Future<ResultSet> pageFuture = Future.future();
+	
+	        UserDAO userDAO = new UserDAO(this.componentImpl.getSysDatasource());
+	        userDAO.getUserList(acctId, bizUnitId, pageFuture);
+	
+	        pageFuture.setHandler(ret -> {
+	            if (ret.failed()) {
+					Throwable err = ret.cause();
+					String errMsg = err.getMessage();
+					componentImpl.getLogger().error(errMsg, err);	
+					msg.fail(400, errMsg);
+	                return;
+	            }
+	            msg.reply(ret.result().toJson());	
+	        });
+        }
     }
 
     /**

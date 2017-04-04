@@ -582,7 +582,20 @@ public class UserDAO extends OperatorDAO {
 	
 	   this.queryWithParams(sql, params, future);
     	
-    }   
+    }  
+    
+    public void getUserList(Long acctId, Long bizUnitId, Future<ResultSet> future) {
+        
+      
+	   final String sql = "SELECT * FROM view_acct_user_post where acct_id=? and d_acct_biz_unit_id=?";
+			   
+	   JsonArray params = new JsonArray();
+	   params.add(acctId);
+	   params.add(bizUnitId);
+	
+	   this.queryWithParams(sql, params, future);
+    	
+    }
     
     public void getUserPosts(Long acctId, Long userId, Future<ResultSet> future) {
               

@@ -71,7 +71,7 @@ public class BizUnitDAO extends OperatorDAO{
 	  
 	  Long userId = Long.parseLong(sessionInfo.getString("user_id"));
 		  
-	  String sql = "INSERT INTO acct_biz_unit(unit_code,unit_name,unit_manager,org_role_id,acct_id,entry_id,entry_datetime)VALUES(?,?,?,?,?,?,now())"; 
+	  String sql = "INSERT INTO acct_biz_unit(unit_code,unit_name,is_global,unit_manager,org_role_id,acct_id,entry_id,entry_datetime)VALUES(?,?,?,?,?,?,?,now())"; 
 	  
 		List<Future> futures = new ArrayList<Future>();		
 		
@@ -86,6 +86,7 @@ public class BizUnitDAO extends OperatorDAO{
 				  	new JsonArray()
 						  .add(bizUnit.getString("unit_code"))
 						  .add(bizUnit.getString("unit_name"))	
+						  .add(bizUnit.getBoolean("is_global"))
 						  .add(bizUnit.getLong("unit_manager", 0L))
 						  .add(bizUnit.getLong("org_role_id"))
 						  .add(bizUnit.getLong("acct_id"))

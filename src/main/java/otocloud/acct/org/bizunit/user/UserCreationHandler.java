@@ -23,6 +23,7 @@ public class UserCreationHandler extends OtoCloudEventHandlerImpl<JsonObject> {
      * {
      * 	  acct_id: 租户ID
      * 	  biz_unit_id: 业务单元ID
+     * 	  d_is_global_bu: 是否全局业务单元
      * 	  post_id: 岗位ID
      * 	  auth_role_id: 对应的角色 规格
      * 	  user: {

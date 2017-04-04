@@ -32,6 +32,7 @@ public class BizUnitCreateHandler extends OtoCloudEventHandlerImpl<JsonObject> {
 	[{
 		"unit_code":
 		"unit_name":
+		"is_global"
 		"unit_manager":
 		"org_role_id":
 		"acct_id";
