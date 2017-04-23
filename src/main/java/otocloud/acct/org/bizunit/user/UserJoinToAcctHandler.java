@@ -3,8 +3,8 @@ package otocloud.acct.org.bizunit.user;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.json.JsonObject;
 import otocloud.common.ActionURI;
+import otocloud.framework.core.CommandMessage;
 import otocloud.framework.core.HandlerDescriptor;
-import otocloud.framework.core.OtoCloudBusMessage;
 import otocloud.framework.core.OtoCloudComponentImpl;
 import otocloud.framework.core.OtoCloudEventHandlerImpl;
 
@@ -23,6 +23,7 @@ public class UserJoinToAcctHandler extends OtoCloudEventHandlerImpl<JsonObject> 
      * {
      * 	  acct_id: 租户ID
      * 	  biz_unit_id: 业务单元ID
+     * 	  d_org_role_id
      * 	  post_id: 岗位ID
      * 	  auth_role_id: 对应的角色 规格
      * 	  auth_user_id: 
@@ -30,7 +31,7 @@ public class UserJoinToAcctHandler extends OtoCloudEventHandlerImpl<JsonObject> 
      * 
      */
     @Override
-    public void handle(OtoCloudBusMessage<JsonObject> msg) {
+    public void handle(CommandMessage<JsonObject> msg) {
  
         JsonObject body = msg.body();
  /*       JsonObject session = msg.getSession();

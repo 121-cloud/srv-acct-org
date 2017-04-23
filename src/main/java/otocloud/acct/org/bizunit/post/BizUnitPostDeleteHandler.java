@@ -3,17 +3,17 @@
  */
 package otocloud.acct.org.bizunit.post;
 
-import otocloud.acct.org.dao.BizUnitPostDAO;
-import otocloud.common.ActionURI;
-import otocloud.framework.core.HandlerDescriptor;
-import otocloud.framework.core.OtoCloudBusMessage;
-import otocloud.framework.core.OtoCloudComponentImpl;
-import otocloud.framework.core.OtoCloudEventHandlerImpl;
-import otocloud.persistence.dao.TransactionConnection;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.jdbc.JDBCClient;
 import io.vertx.ext.sql.SQLConnection;
+import otocloud.acct.org.dao.BizUnitPostDAO;
+import otocloud.common.ActionURI;
+import otocloud.framework.core.CommandMessage;
+import otocloud.framework.core.HandlerDescriptor;
+import otocloud.framework.core.OtoCloudComponentImpl;
+import otocloud.framework.core.OtoCloudEventHandlerImpl;
+import otocloud.persistence.dao.TransactionConnection;
 
 
 
@@ -36,7 +36,7 @@ public class BizUnitPostDeleteHandler extends OtoCloudEventHandlerImpl<JsonObjec
 	}
 	 */
 	@Override
-	public void handle(OtoCloudBusMessage<JsonObject> msg) {
+	public void handle(CommandMessage<JsonObject> msg) {
 		JsonObject body = msg.body();
 		
 		componentImpl.getLogger().info(body.toString());

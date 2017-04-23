@@ -3,15 +3,15 @@
  */
 package otocloud.acct.org.app;
 
-import otocloud.common.ActionURI;
-import otocloud.framework.core.HandlerDescriptor;
-import otocloud.framework.core.OtoCloudBusMessage;
-import otocloud.framework.core.OtoCloudComponentImpl;
-import otocloud.framework.core.OtoCloudEventHandlerImpl;
-import otocloud.acct.org.dao.AppSubscribeDAO;
 import io.vertx.core.Future;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.json.JsonObject;
+import otocloud.acct.org.dao.AppSubscribeDAO;
+import otocloud.common.ActionURI;
+import otocloud.framework.core.CommandMessage;
+import otocloud.framework.core.HandlerDescriptor;
+import otocloud.framework.core.OtoCloudComponentImpl;
+import otocloud.framework.core.OtoCloudEventHandlerImpl;
 
 
 public class AppPermissionVerficationHandler extends OtoCloudEventHandlerImpl<JsonObject> {
@@ -34,7 +34,7 @@ public class AppPermissionVerficationHandler extends OtoCloudEventHandlerImpl<Js
 	}
 	*/
 	@Override
-	public void handle(OtoCloudBusMessage<JsonObject> msg) {
+	public void handle(CommandMessage<JsonObject> msg) {
 		JsonObject body = msg.body();
 		
 		componentImpl.getLogger().info(body.toString());

@@ -8,8 +8,8 @@ import io.vertx.ext.sql.SQLConnection;
 import otocloud.acct.org.AccountOrgService;
 import otocloud.acct.org.dao.UserDAO;
 import otocloud.common.ActionURI;
+import otocloud.framework.core.CommandMessage;
 import otocloud.framework.core.HandlerDescriptor;
-import otocloud.framework.core.OtoCloudBusMessage;
 import otocloud.framework.core.OtoCloudComponentImpl;
 import otocloud.framework.core.OtoCloudEventHandlerImpl;
 import otocloud.persistence.dao.TransactionConnection;
@@ -34,7 +34,7 @@ public class UserDeleteHandler extends OtoCloudEventHandlerImpl<JsonObject> {
      * 
      */
     @Override
-    public void handle(OtoCloudBusMessage<JsonObject> msg) {
+    public void handle(CommandMessage<JsonObject> msg) {
     	
     	JsonObject body = msg.body();
     	

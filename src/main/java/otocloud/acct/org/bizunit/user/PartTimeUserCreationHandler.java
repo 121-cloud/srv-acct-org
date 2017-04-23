@@ -7,8 +7,8 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.ext.sql.UpdateResult;
 import otocloud.acct.org.dao.UserDAO;
 import otocloud.common.ActionURI;
+import otocloud.framework.core.CommandMessage;
 import otocloud.framework.core.HandlerDescriptor;
-import otocloud.framework.core.OtoCloudBusMessage;
 import otocloud.framework.core.OtoCloudComponentImpl;
 import otocloud.framework.core.OtoCloudEventHandlerImpl;
 
@@ -30,6 +30,7 @@ public class PartTimeUserCreationHandler extends OtoCloudEventHandlerImpl<JsonOb
      * {
      * 	  acct_id: 租户ID
      * 	  biz_unit_id: 业务单元ID
+     * 	  d_org_role_id
      * 	  post_id: 岗位ID
      * 	  auth_role_id: 对应的角色 规格
      * 	  auth_user_id: 用户ID
@@ -37,7 +38,7 @@ public class PartTimeUserCreationHandler extends OtoCloudEventHandlerImpl<JsonOb
      * 
      */
     @Override
-    public void handle(OtoCloudBusMessage<JsonObject> msg) {
+    public void handle(CommandMessage<JsonObject> msg) {
  
         JsonObject body = msg.body();
        
@@ -45,6 +46,7 @@ public class PartTimeUserCreationHandler extends OtoCloudEventHandlerImpl<JsonOb
         
         Long acctId = content.getLong("acct_id");
         Long bizUnitId = content.getLong("biz_unit_id");
+        Long d_org_role_id = content.getLong("d_org_role_id");
         Long postId = content.getLong("post_id");
         Long authRoleId = content.getLong("auth_role_id", 0L);
         Long auth_user_id = content.getLong("auth_user_id");
@@ -54,7 +56,7 @@ public class PartTimeUserCreationHandler extends OtoCloudEventHandlerImpl<JsonOb
  
         Future<UpdateResult> createUserfuture = Future.future();
         UserDAO userDAO = new UserDAO(this.componentImpl.getSysDatasource());
-        userDAO.addAcctPostForPartTimer(acctId, bizUnitId, postId, authRoleId, auth_user_id, userId, createUserfuture);
+        userDAO.addAcctPostForPartTimer(acctId, bizUnitId, d_org_role_id, postId, authRoleId, auth_user_id, userId, createUserfuture);
         createUserfuture.setHandler(userResult -> {
             if (userResult.succeeded()) {
                

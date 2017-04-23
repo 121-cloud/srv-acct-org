@@ -28,14 +28,15 @@ public class UserDAO extends OperatorDAO {
         super(dataSource);
     }
     
-    public void addAcctPostForPartTimer(Long acctId, Long bizUnitId, Long postId, Long authRoleId, Long userId, Long operatorId, Future<UpdateResult> future) {
+    public void addAcctPostForPartTimer(Long acctId, Long bizUnitId, Long d_org_role_id, Long postId, Long authRoleId, Long userId, Long operatorId, Future<UpdateResult> future) {
 
-        final String insertPostSQL = "INSERT INTO acct_user_post(auth_user_id, acct_id, d_acct_biz_unit_id, acct_biz_unit_post_id, d_auth_role_id, status, entry_id, entry_datetime) " +
-                "VALUES(?, ?, ?, ?, ?, 'A', ?, now())";
+        final String insertPostSQL = "INSERT INTO acct_user_post(auth_user_id, acct_id, d_acct_biz_unit_id, d_org_role_id, acct_biz_unit_post_id, d_auth_role_id, status, entry_id, entry_datetime) " +
+                "VALUES(?, ?, ?, ?, ?, ?, 'A', ?, now())";
         JsonArray params2 = new JsonArray();
         params2.add(userId);
         params2.add(acctId);                
         params2.add(bizUnitId);
+        params2.add(d_org_role_id);
         params2.add(postId);         
         params2.add(authRoleId);  
         params2.add(operatorId);

@@ -5,7 +5,7 @@ package otocloud.acct.org.bizunit.post;
 
 import otocloud.common.ActionURI;
 import otocloud.framework.core.HandlerDescriptor;
-import otocloud.framework.core.OtoCloudBusMessage;
+import otocloud.framework.core.CommandMessage;
 import otocloud.framework.core.OtoCloudComponentImpl;
 import otocloud.framework.core.OtoCloudEventHandlerImpl;
 import otocloud.acct.org.dao.BizUnitPostDAO;
@@ -48,7 +48,7 @@ public class BizUnitPostCreateHandler extends OtoCloudEventHandlerImpl<JsonObjec
 	}
 	*/
 	@Override
-	public void handle(OtoCloudBusMessage<JsonObject> msg) {
+	public void handle(CommandMessage<JsonObject> msg) {
 		JsonObject body = msg.body();
 		
 		componentImpl.getLogger().info(body.toString());

@@ -4,20 +4,21 @@
 package otocloud.acct.org.app;
 
 
-import java.util.Map;
-
-import otocloud.common.ActionURI;
-import otocloud.framework.core.HandlerDescriptor;
-import otocloud.framework.core.OtoCloudBusMessage;
-import otocloud.framework.core.OtoCloudComponentImpl;
-import otocloud.framework.core.OtoCloudEventHandlerImpl;
-import otocloud.persistence.dao.TransactionConnection;
-import otocloud.acct.org.dao.AppSubscribeDAO;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.jdbc.JDBCClient;
 import io.vertx.ext.sql.SQLConnection;
+
+import java.util.Map;
+
+import otocloud.acct.org.dao.AppSubscribeDAO;
+import otocloud.common.ActionURI;
+import otocloud.framework.core.CommandMessage;
+import otocloud.framework.core.HandlerDescriptor;
+import otocloud.framework.core.OtoCloudComponentImpl;
+import otocloud.framework.core.OtoCloudEventHandlerImpl;
+import otocloud.persistence.dao.TransactionConnection;
 
 
 
@@ -69,7 +70,7 @@ public class AppSubscribeHandler extends OtoCloudEventHandlerImpl<JsonObject> {
 	}
 	*/
 	@Override
-	public void handle(OtoCloudBusMessage<JsonObject> msg) {
+	public void handle(CommandMessage<JsonObject> msg) {
 		JsonObject body = msg.body();
 		
 		componentImpl.getLogger().info(body.toString());

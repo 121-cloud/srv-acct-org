@@ -7,8 +7,8 @@ import io.vertx.ext.sql.ResultSet;
 import otocloud.acct.org.dao.AppSubscribeDAO;
 import otocloud.common.ActionURI;
 import otocloud.framework.common.IgnoreAuthVerify;
+import otocloud.framework.core.CommandMessage;
 import otocloud.framework.core.HandlerDescriptor;
-import otocloud.framework.core.OtoCloudBusMessage;
 import otocloud.framework.core.OtoCloudComponentImpl;
 import otocloud.framework.core.OtoCloudEventHandlerImpl;
 
@@ -65,7 +65,7 @@ public class ActivityListGetHandler extends OtoCloudEventHandlerImpl<JsonObject>
 	 */
 	//处理器
 	@Override
-	public void handle(OtoCloudBusMessage<JsonObject> msg) {
+	public void handle(CommandMessage<JsonObject> msg) {
 		JsonObject content = msg.body().getJsonObject("content");
 		Long acct_app_id = content.getLong("acct_app_id");
 		boolean load_auth_roles = content.getBoolean("load_auth_roles", false);
