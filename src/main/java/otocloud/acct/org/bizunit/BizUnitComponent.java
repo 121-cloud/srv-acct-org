@@ -28,6 +28,9 @@ public class BizUnitComponent extends OtoCloudComponentImpl {
 		BizUnitQueryHandler bizUnitQueryHandler = new BizUnitQueryHandler(this);
 		ret.add(bizUnitQueryHandler);
 		
+		BizUnitFindoneHandler bizUnitFindoneHandler = new BizUnitFindoneHandler(this);
+		ret.add(bizUnitFindoneHandler);
+		
 		BizUnitModifyHandler bizUnitModifyHandler = new BizUnitModifyHandler(this);
 		ret.add(bizUnitModifyHandler);
 		

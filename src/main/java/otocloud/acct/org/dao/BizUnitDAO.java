@@ -35,6 +35,17 @@ public class BizUnitDAO extends OperatorDAO{
 
     }
     
+    public void getBizUnit(Long acctId, String bizUnitCode, Future<ResultSet> future) {
+        
+	   final String sql = "SELECT * FROM view_acct_biz_unit where acct_id=? AND unit_code=? AND status='A'";
+	   JsonArray params = new JsonArray();
+	   params.add(acctId);
+	   params.add(bizUnitCode);
+	
+	   this.queryWithParams(sql, params, future);
+
+    }
+    
     public void getActivityForBizUnit(Long acctId, Long org_role_id, Future<ResultSet> future) {
         
 	   final String sql = "select f.id,f.app_id,f.app_name,f.activity_code,f.activity_name,f.activity_desc,f.d_is_platform,e.acct_app_id,e.acct_app_activity_id from "
